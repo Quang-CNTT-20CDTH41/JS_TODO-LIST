@@ -42,7 +42,12 @@
                     </div>
                     <div class="col-md-2">
                         <label for="status" class="col-form-label text-center"><h4>Status</h4></label>
-                        <input type="text" class="form-control" id="status" placeholder="Nhập Status">
+                        <!-- <input type="text" class="form-control" id="status" placeholder="Nhập Status"> -->
+                        <select name="" id="status" class="form-select">
+                            <option value="not_start">Chưa bắt đầu</option>
+                            <option value="doing">Đang làm</option>
+                            <option value="completed">Đã hoàn thành</option>
+                        </select>
                     </div>
                     <div class="col-md-2">
                         <button type="submit" id="btnAdd" class="btn btn-success" style="margin-top: 50px">Add Task</button>
@@ -50,7 +55,42 @@
                 </div>
             </div>
             <!-- !INPUT -->
+
+            <!-- SEARCH -->
+            <div class="row">
+                <label for="search" class="col-form-label col-sm-2 text-white" ><h4>Tìm kiếm</h4></label>
+                <div class="col-sm-4">
+                    <input type="search" id='text_search' class="form-control" placeholder="Nhập Title muốn tìm kiếm">
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" class="search" id="btn_search"><i class="bi bi-search"></i></button>
+                </div>
+                
+                <!-- RESULT -->
+                <div id="result_search">
+                    <div class="row text-white">
+                        <div class="col-md-2">ID</div>
+                        <div class="col-md-2">TITLE</div>
+                        <div  class="col-md-2">DESC</div>
+                        <div  class="col-md-2">TIMEBEGIN</div>
+                        <div  class="col-md-2">TIMEEND</div>
+                        <div  class="col-md-2">START</div>
+                    </div>
+                    <hr>
+                    <div class="row text-white">
+                        <div id="result_id" class="col-md-2"></div>
+                        <div id="result_title" class="col-md-2"></div>
+                        <div id="result_desc" class="col-md-2"></div>
+                        <div id="result_timebegin" class="col-md-2"></div>
+                        <div id="result_timeend" class="col-md-2"></div>
+                        <div id="result_status" class="col-md-2"></div>
+                    </div>
+                </div>
+                <!-- !RESULT -->
+            </div>
+            <!-- !SEARCH -->
             <hr>
+
             <div class="bg-primary my-5 rounded text-white p-2 text-center">
                 <!-- TITLE CONTENT-->
                 <div class="row">
@@ -69,12 +109,13 @@
                     <div class="col-md-2">
                         <h6>Time End</h6>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-sm-1">
                         <h6>Status</h6>
                     </div>
                     <div class="col-sm-1 d-flex">
                         <h6>Edit</h6>
                         <h6 class="mx-5">Delete</h6>
+                        <h6>Update</h6>
                     </div>
                     <hr>
                 </div>  
@@ -100,12 +141,14 @@
                                 <label for="timeend" class="col-form-label text-center"><h4>Time End</h4></label>
                                 <input type="datetime-local" class="form-control" id="edit_timeend" placeholder="Nhập Time End">
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-sm-2">
                                 <label for="status" class="col-form-label text-center"><h4>Status</h4></label>
-                                <input type="text" class="form-control" id="edit_status" placeholder="Nhập Status">
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" id="btnEdit" class="btn btn-success" style="margin-top: 50px">Edit Task</button>
+                                <!-- <input type="text" class="form-control" id="edit_status" placeholder="Nhập Status"> -->
+                                <select name="" id="edit_status" class="form-select">
+                                    <option value="not_start">Chưa bắt đầu</option>
+                                    <option value="doing">Đang làm</option>
+                                    <option value="completed">Đã hoàn thành</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -114,6 +157,7 @@
 
                 <!-- CONTENT -->
                 <div id="root">  
+                    
                 </div>
                 <!-- !CONTENT -->
             </div>

@@ -25,3 +25,29 @@ body{
 #edit{
     display: none;
 }
+
+.color-yellow{
+    padding: 4px;
+    border-radius: 5px;
+    background: #FF8C00;
+}
+
+.color-gray{
+    padding: 4px;
+    border-radius: 5px;
+    background: gray;
+}
+
+.color-green{
+    padding: 4px;
+    border-radius: 5px;
+    background: green;
+}
+
+#update, #result_search, .btn-none{
+    display: none;
+}
+
+#result_search{
+    width: 80%;
+}

@@ -1,193 +1,167 @@
-class Task{
-    constructor(id, title, desc, timeBegin, timeEnd, status){
-        this.__id = id;
-        this.__title = title;
-        this.__desc = desc;
-        this.__timeBegin = timeBegin;
-        this.__timeEnd = timeEnd;
-        this.__status = status;
-    }
+<!DOCTYPE html>
+<html lang="en">
 
-    set id(value) { this.__id = value; }
-    get id() { return this.__id; };
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
 
-    set title(value) { this.__title = value; }
-    get title() { return this.__title; };
+    <link rel="stylesheet" href="./style.css">
     
-    set desc(value) { this.__desc = value; }
-    get desc() { return this.__desc; };
-    
-    set timeBegin(value) { this.__timeBegin = value; }
-    get timeBegin() { return this.__timeBegin; };
-    
-    set timeEnd(value) { this.__timeEnd = value; }
-    get timeEnd() { return this.__timeEnd; };
-    
-    set status(value) { this.__status = value; }
-    get status() { return this.__status; };
+    <script src="main.js"></script>
+</head>
 
-}
+<body>
 
-/**
- * 
- * 
- */
+    <div class="container-fluid mt-2">
+        <div class="todo bg-info p-2">
+            <div class="title-todo py-3">
+                <h2 class="text-center text-white">TODO LIST <i class="bi bi-pin-angle-fill"></i></h2>
+            </div>
+            <!-- INPUT -->
+            <div class="bg-warning py-3 text-white d-flex m-3 rounded">
+                <div class="row px-2 text-center">
+                    <div class="col-md-2">
+                        <label for="title" class="col-form-label text-center"><h4>Title</h4></label>
+                        <input type="text" class="form-control" id="title" placeholder="Nhập title">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="desc" class="col-form-label text-center"><h4>Descript</h4></label>
+                        <input type="text" class="form-control"  id="desc" placeholder="Nhập Descript">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="timebegin" class="col-form-label text-center"><h4>Time Begin</h4></label>
+                        <input type="datetime-local" class="form-control" id="timebegin" placeholder="Nhập Time Begin">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="timeend" class="col-form-label text-center"><h4>Time End</h4></label>
+                        <input type="datetime-local" class="form-control" id="timeend" placeholder="Nhập Time End">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="status" class="col-form-label text-center"><h4>Status</h4></label>
+                        <!-- <input type="text" class="form-control" id="status" placeholder="Nhập Status"> -->
+                        <select name="" id="status" class="form-select">
+                            <option value="not_start">Chưa bắt đầu</option>
+                            <option value="doing">Đang làm</option>
+                            <option value="completed">Đã hoàn thành</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" id="btnAdd" class="btn btn-success" style="margin-top: 50px">Add Task</button>
+                    </div>
+                </div>
+            </div>
+            <!-- !INPUT -->
 
-taskList = Array();
+            <!-- SEARCH -->
+            <div class="row">
+                <label for="search" class="col-form-label col-sm-2 text-white" ><h4>Tìm kiếm</h4></label>
+                <div class="col-sm-4">
+                    <input type="search" id='text_search' class="form-control" placeholder="Nhập Title muốn tìm kiếm">
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" class="search" id="btn_search"><i class="bi bi-search"></i></button>
+                </div>
+                
+                <!-- RESULT -->
+                <div id="result_search">
+                    <div class="row text-white">
+                        <div class="col-md-2">ID</div>
+                        <div class="col-md-2">TITLE</div>
+                        <div  class="col-md-2">DESC</div>
+                        <div  class="col-md-2">TIMEBEGIN</div>
+                        <div  class="col-md-2">TIMEEND</div>
+                        <div  class="col-md-2">START</div>
+                    </div>
+                    <hr>
+                    <div class="row text-white">
+                        <div id="result_id" class="col-md-2"></div>
+                        <div id="result_title" class="col-md-2"></div>
+                        <div id="result_desc" class="col-md-2"></div>
+                        <div id="result_timebegin" class="col-md-2"></div>
+                        <div id="result_timeend" class="col-md-2"></div>
+                        <div id="result_status" class="col-md-2"></div>
+                    </div>
+                </div>
+                <!-- !RESULT -->
+            </div>
+            <!-- !SEARCH -->
+            <hr>
 
-function create() {
-    btn = document.getElementById("btnAdd");
-    btn.addEventListener('click', addTask);
+            <div class="bg-primary my-5 rounded text-white p-2 text-center">
+                <!-- TITLE CONTENT-->
+                <div class="row">
+                    <div class="col-md-1">
+                        <h6>Id</h6>
+                    </div>
+                    <div class="col-md-2">
+                        <h6>Title</h6>
+                    </div>
+                    <div class="col-md-2">
+                        <h6>Descript</h6>
+                    </div>
+                    <div class="col-md-2">
+                        <h6>Time Begin</h6>
+                    </div>
+                    <div class="col-md-2">
+                        <h6>Time End</h6>
+                    </div>
+                    <div class="col-sm-1">
+                        <h6>Status</h6>
+                    </div>
+                    <div class="col-sm-1 d-flex">
+                        <h6>Edit</h6>
+                        <h6 class="mx-5">Delete</h6>
+                        <h6>Update</h6>
+                    </div>
+                    <hr>
+                </div>  
+                <!-- !TITLE CONTENT-->
 
-    btn = document.getElementById("btnEdit");
+                <!-- EDIT -->
+                <div id="edit">
+                    <div class="bg-warning py-3 text-white d-flex m-3 rounded">
+                        <div class="row px-2 text-center">
+                            <div class="col-md-2">
+                                <label for="title" class="col-form-label text-center"><h4>Title</h4></label>
+                                <input type="text" class="form-control" id="edit_title" placeholder="Nhập title">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="desc" class="col-form-label text-center"><h4>Descript</h4></label>
+                                <input type="text" class="form-control"  id="edit_desc" placeholder="Nhập Descript">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="timebegin" class="col-form-label text-center"><h4>Time Begin</h4></label>
+                                <input type="datetime-local" class="form-control" id="edit_timebegin" placeholder="Nhập Time Begin">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="timeend" class="col-form-label text-center"><h4>Time End</h4></label>
+                                <input type="datetime-local" class="form-control" id="edit_timeend" placeholder="Nhập Time End">
+                            </div>
+                            <div class="col-sm-2">
+                                <label for="status" class="col-form-label text-center"><h4>Status</h4></label>
+                                <!-- <input type="text" class="form-control" id="edit_status" placeholder="Nhập Status"> -->
+                                <select name="" id="edit_status" class="form-select">
+                                    <option value="not_start">Chưa bắt đầu</option>
+                                    <option value="doing">Đang làm</option>
+                                    <option value="completed">Đã hoàn thành</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>        
+                <!-- !EDIT -->
 
-    rootDom = document.getElementById('root');
-    titleDom = document.getElementById('title');
-    descDom = document.getElementById('desc');
-    timeBeginDom = document.getElementById('timebegin');
-    timeEndDom = document.getElementById('timeend');
-    statusDom = document.getElementById('status');
-
-    editDom = document.getElementById('edit');
-
-    editTitleDom = document.getElementById('edit_title');
-    editDescDom = document.getElementById('edit_desc');
-    editTimeBeginDom = document.getElementById('edit_timebegin');
-    editTimeEndDom = document.getElementById('edit_timeend');
-    editStatusDom = document.getElementById('edit_status');
-
-}
-
-function render() {
-    rootDom.innerHTML  = '';
-    taskList.forEach(task => {
-        rootDom.appendChild(createNodeTask(task));
-    })
-}
-
-function createNodeTask(task) {
-    nodeRow = document.createElement('div');
-    nodeRow.setAttribute('class', 'row m-2');
-
-    nodeId = document.createElement('div');
-    nodeId.setAttribute('class', 'col-md-1');
-    nodeId.innerHTML = task.id;
-    nodeRow.appendChild(nodeId);
-
-    nodeTitle = document.createElement('div');
-    nodeTitle.setAttribute('class', 'col-md-2');
-    nodeTitle.innerHTML = task.title;
-    nodeRow.appendChild(nodeTitle);
-
-    nodeDesc = document.createElement('div');
-    nodeDesc.setAttribute('class', 'col-md-2');
-    nodeDesc.innerHTML = task.desc;
-    nodeRow.appendChild(nodeDesc);
-
-    nodeTimeBegin = document.createElement('div');
-    nodeTimeBegin.setAttribute('class', 'col-md-2');
-    nodeTimeBegin.innerHTML = task.timeBegin;
-    nodeRow.appendChild(nodeTimeBegin);
-
-    nodeTimeEnd = document.createElement('div');
-    nodeTimeEnd.setAttribute('class', 'col-md-2');
-    nodeTimeEnd.innerHTML = task.timeEnd;
-    nodeRow.appendChild(nodeTimeEnd);
-
-    nodeStatus = document.createElement('div');
-    nodeStatus.setAttribute('class', 'col-md-2');
-    nodeStatus.innerHTML = task.status;
-    nodeRow.appendChild(nodeStatus);
-
-    // Create button Edit
-    nodeBtnWrap = document.createElement('div');
-    nodeBtnWrap.setAttribute('class', 'col-md-1 d-flex');
-    nodeRow.appendChild(nodeBtnWrap);
-    
-    nodeButtonEdit = document.createElement('button');
-    nodeButtonEdit.setAttribute('class', 'btn btn-warning');
-    nodeButtonEdit.innerHTML = 'Edit';
-    nodeButtonEdit.addEventListener('click', function(){
-        editTask(task.id);
-    });
-
-    nodeBtnDelete = document.createElement('button');
-    nodeBtnDelete.setAttribute('class', 'btn btn-danger mx-2');
-    nodeBtnDelete.innerHTML = 'Delete';
-    nodeBtnDelete.addEventListener('click', function(){
-        deteleTask(task.id);
-    });
-    
-    nodeBtnWrap.appendChild(nodeButtonEdit);
-    nodeBtnWrap.appendChild(nodeBtnDelete);
-
-    
-    nodeHr = document.createElement('hr');
-    nodeHr.setAttribute('class', 'mt-3');
-    nodeRow.appendChild(nodeHr);
-
-
-    btn.addEventListener('click', function(){
-        updateTask(task.id);
-    });
-
-
-    return nodeRow;
-}
-
-// create task
-let id = 0;
-function addTask() {
-    id++;
-    task = new Task(
-        id,
-        titleDom.value,
-        descDom.value,
-        timeBeginDom.value,
-        timeEndDom.value,
-        statusDom.value
-    )
-    taskList.push(task);
-    render();
-}
-
-function deteleTask(id) {
-    i = 0;
-    for(; i < taskList.length; i++) {
-        if(taskList[i].id == id)  taskList.splice(i, 1);
-    }
-    render();
-}
-
-function editTask(id) {
-    taskList.forEach(task => {
-        if(task.id == id) {
-            editTitleDom.value = task.title;
-            editDescDom.value = task.desc;
-            editTimeBeginDom.value = task.timeBegin;
-            editTimeEndDom.value = task.timeEnd;
-            editStatusDom.value = task.status;
-            editDom.style.display  = 'block';
-        }
-    })
-
-}
-
-function updateTask(id){
-    taskList.forEach(function(task){
-        if(task.id == id) {
-            editDom.style.display  = 'none';
-            task.title = editTitleDom.value;
-            task.desc = editDescDom.value;
-            task.timeBegin = editTimeBeginDom.value;
-            task.timeEnd = editTimeEndDom.value;
-            task.status = editStatusDom.value;
-        }
-    })
-    render();
-}
-
-window.onload = function(e) {
-    create();
-    render();
-}
+                <!-- CONTENT -->
+                <div id="root">  
+                    
+                </div>
+                <!-- !CONTENT -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
